@@ -1,0 +1,120 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "College Backend API",
+        "description": "Auto-generated API documentation for the college website backend.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Primary API server"
+        }
+    ],
+    "paths": {
+        "/api/health": {
+            "get": {
+                "tags": [
+                    "System"
+                ],
+                "summary": "Health check endpoint",
+                "operationId": "apiHealth",
+                "responses": {
+                    "200": {
+                        "description": "System health response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        },
+                                        "service": {
+                                            "type": "string",
+                                            "example": "college-backend"
+                                        },
+                                        "timestamp": {
+                                            "type": "string",
+                                            "example": "2026-04-25 12:00:00"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/posts": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Create a post (web auth + role protected)",
+                "description": "Creates a new post from admin panel request payload.",
+                "operationId": "adminCreatePost",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "body",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "type": "string"
+                                    },
+                                    "excerpt": {
+                                        "type": "string"
+                                    },
+                                    "body": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "draft",
+                                            "published",
+                                            "archived"
+                                        ]
+                                    },
+                                    "published_at": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirect after successful create"
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "System",
+            "description": "System"
+        },
+        {
+            "name": "Posts",
+            "description": "Posts"
+        }
+    ]
+}
